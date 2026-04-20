@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Eventos - COOSAJO</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --azul: #172e59; --verde: #158e45; --blanco: #ffffff; --fondo: #f0f4f8; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--fondo); margin: 0; padding: 20px; color: #333; }
+        
+        .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; position: relative; }
+        .logo { max-width: 200px; margin-bottom: 10px; }
+        .btn-volver { position: absolute; left: 0; top: 10px; background: var(--azul); color: white; padding: 10px 15px; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        
+        .barra-filtros { background: var(--blanco); padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .filtro-item { display: flex; flex-direction: column; gap: 5px; }
+        .filtro-item label { font-weight: bold; color: var(--azul); font-size: 0.85rem; }
+        select { padding: 8px; border-radius: 6px; border: 1px solid #ccc; min-width: 150px; }
+
+        .card { background: var(--blanco); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
+        .grid-stats { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 800px) { .grid-stats { grid-template-columns: 1fr 1fr; } }
+        
+        .monto { font-size: 2.5rem; font-weight: bold; color: var(--verde); margin: 10px 0; }
+        .grafica-contenedor { height: 350px; width: 100%; position: relative; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="btn-volver">← Registro</a>
+        <img src="LOGO COOSAJO SIN ESLOGAN.png" alt="COOSAJO" class="logo">
+        <h1 style="color: var(--azul);">Dashboard Logística de Eventos</h1>
+    </div>
+
+    <div class="barra-filtros">
+        <div class="filtro-item">
+            <label>Filtrar por Mes:</label>
+            <select id="filtroMes">
+                <option value="TODO">Todo el año</option>
+                <option value="Enero">Enero</option><option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option><option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+            </select>
+        </div>
+        <div class="filtro-item">
+            <label>Filtrar por Marca:</label>
+            <select id="filtroMarca">
+                <option value="TODO">Todas las marcas</option>
+                <option value="Coosajo">Coosajo</option>
+                <option value="Micoope">Micoope</option>
+                <option value="Génesis">Génesis</option>
+                <option value="Parque Chatun">Parque Chatun</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 id="tituloTotal">VALOR TOTAL DE SERVICIOS</h3>
+        <div class="monto" id="totalGeneral">Q 0.00</div>
+    </div>
+
+    <div class="grid-stats">
+        <div class="card">
+            <h3>Servicios por Categoría</h3>
+            <div class="grafica-contenedor"><canvas id="chartCategorias"></canvas></div>
+        </div>
+        <div class="card">
+            <h3>Inversión por Marca</h3>
+            <div class="grafica-contenedor"><canvas id="chartMarcas"></canvas></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACfn6C6_XqLDQI29f6uHUUwlCQkSCXNYk",
+            authDomain: "costos-comunicacion-digital.firebaseapp.com",
+            projectId: "costos-comunicacion-digital",
+            storageBucket: "costos-comunicacion-digital.firebasestorage.app",
+            messagingSenderId: "299496606379",
+            appId: "1:299496606379:web:a4d6609ff79eebff0c85ee"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let cCat, cMar, datosOriginales = [];
+
+        onSnapshot(collection(db, "area_eventos"), (snap) => {
+            datosOriginales = snap.docs.map(d => d.data());
+            actualizarUI();
+        });
+
+        document.getElementById('filtroMes').addEventListener('change', actualizarUI);
+        document.getElementById('filtroMarca').addEventListener('change', actualizarUI);
+
+        function actualizarUI() {
+            const fMes = document.getElementById('filtroMes').value;
+            const fMarca = document.getElementById('filtroMarca').value;
+
+            let filtrados = datosOriginales;
+            if(fMes !== "TODO") filtrados = filtrados.filter(d => d.mes === fMes);
+            if(fMarca !== "TODO") filtrados = filtrados.filter(d => d.marca === fMarca);
+
+            let total = 0, porCat = {}, porMar = {};
+
+            filtrados.forEach(d => {
+                total += d.total;
+                porCat[d.servicio] = (porCat[d.servicio] || 0) + d.total;
+                porMar[d.marca] = (porMar[d.marca] || 0) + d.total;
+            });
+
+            document.getElementById('totalGeneral').innerText = `Q ${total.toLocaleString('es-GT', {minimumFractionDigits: 2})}`;
+
+            if(cCat) cCat.destroy();
+            cCat = new Chart(document.getElementById('chartCategorias'), {
+                type: 'doughnut',
+                data: { labels: Object.keys(porCat), datasets: [{ data: Object.values(porCat), backgroundColor: ['#172e59','#158e45','#f1c40f','#e67e22','#3498db'] }] },
+                options: { maintainAspectRatio: false }
+            });
+
+            if(cMar) cMar.destroy();
+            cMar = new Chart(document.getElementById('chartMarcas'), {
+                type: 'bar',
+                data: { labels: Object.keys(porMar), datasets: [{ label: 'Total Q', data: Object.values(porMar), backgroundColor: '#158e45' }] },
+                options: { maintainAspectRatio: false }
+            });
+        }
+    </script>
+</body>
+</html>
