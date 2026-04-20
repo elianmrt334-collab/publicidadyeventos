@@ -10,7 +10,7 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--fondo); margin: 0; padding: 20px; color: #333; }
         
         .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; position: relative; }
-        .logo { max-width: 200px; margin-bottom: 10px; }
+        .logo { max-width: 220px; margin-bottom: 10px; height: auto; }
         .btn-volver { position: absolute; left: 0; top: 10px; background: var(--azul); color: white; padding: 10px 15px; text-decoration: none; border-radius: 8px; font-weight: bold; }
         
         .barra-filtros { background: var(--blanco); padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
@@ -22,7 +22,7 @@
         .grid-stats { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media (min-width: 800px) { .grid-stats { grid-template-columns: 1fr 1fr; } }
         
-        .monto { font-size: 2.5rem; font-weight: bold; color: var(--verde); margin: 10px 0; }
+        .monto { font-size: 2.8rem; font-weight: bold; color: var(--verde); margin: 10px 0; }
         .grafica-contenedor { height: 350px; width: 100%; position: relative; }
     </style>
 </head>
@@ -40,7 +40,10 @@
                 <option value="TODO">Todo el año</option>
                 <option value="Enero">Enero</option><option value="Febrero">Febrero</option>
                 <option value="Marzo">Marzo</option><option value="Abril">Abril</option>
-                <option value="Mayo">Mayo</option>
+                <option value="Mayo">Mayo</option><option value="Junio">Junio</option>
+                <option value="Julio">Julio</option><option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option><option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option><option value="Diciembre">Diciembre</option>
             </select>
         </div>
         <div class="filtro-item">
@@ -56,13 +59,13 @@
     </div>
 
     <div class="card">
-        <h3 id="tituloTotal">VALOR TOTAL DE SERVICIOS</h3>
+        <h3>VALOR TOTAL DE SERVICIOS PRESTADOS</h3>
         <div class="monto" id="totalGeneral">Q 0.00</div>
     </div>
 
     <div class="grid-stats">
         <div class="card">
-            <h3>Servicios por Categoría</h3>
+            <h3>Distribución por Categoría</h3>
             <div class="grafica-contenedor"><canvas id="chartCategorias"></canvas></div>
         </div>
         <div class="card">
