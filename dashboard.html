@@ -50,9 +50,10 @@
             <label>Filtrar por Marca:</label>
             <select id="filtroMarca">
                 <option value="TODO">Todas las marcas</option>
+                <option value="Meta">Meta</option>
+                <option value="Magicuenta">Magicuenta</option>
                 <option value="Coosajo">Coosajo</option>
-                <option value="Micoope">Micoope</option>
-                <option value="Génesis">Génesis</option>
+                <option value="Municipalidad">Municipalidad</option>
                 <option value="Parque Chatun">Parque Chatun</option>
             </select>
         </div>
@@ -120,14 +121,27 @@
             if(cCat) cCat.destroy();
             cCat = new Chart(document.getElementById('chartCategorias'), {
                 type: 'doughnut',
-                data: { labels: Object.keys(porCat), datasets: [{ data: Object.values(porCat), backgroundColor: ['#172e59','#158e45','#f1c40f','#e67e22','#3498db', '#9b59b6'] }] },
+                data: { 
+                    labels: Object.keys(porCat), 
+                    datasets: [{ 
+                        data: Object.values(porCat), 
+                        backgroundColor: ['#172e59','#158e45','#f1c40f','#e67e22','#3498db', '#9b59b6', '#e74c3c'] 
+                    }] 
+                },
                 options: { maintainAspectRatio: false }
             });
 
             if(cMar) cMar.destroy();
             cMar = new Chart(document.getElementById('chartMarcas'), {
                 type: 'bar',
-                data: { labels: Object.keys(porMar), datasets: [{ label: 'Total Q', data: Object.values(porMar), backgroundColor: '#158e45' }] },
+                data: { 
+                    labels: Object.keys(porMar), 
+                    datasets: [{ 
+                        label: 'Total Q', 
+                        data: Object.values(porMar), 
+                        backgroundColor: '#158e45' 
+                    }] 
+                },
                 options: { maintainAspectRatio: false }
             });
         }
