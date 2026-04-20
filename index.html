@@ -7,15 +7,19 @@
     <style>
         :root { --azul: #172e59; --verde: #158e45; --blanco: #ffffff; --fondo: #f0f4f8; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--fondo); margin: 0; padding: 20px; color: #333; display: flex; flex-direction: column; align-items: center; }
+        
         .header { text-align: center; margin-bottom: 20px; }
-        .logo { max-width: 180px; margin-bottom: 10px; }
-        h1 { color: var(--azul); margin: 0; }
+        .logo { max-width: 250px; margin-bottom: 10px; height: auto; }
+        h1 { color: var(--azul); margin: 0; font-size: 1.8rem; }
+        p { color: #666; margin-top: 5px; }
+
         .formulario-card { background: var(--blanco); padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 600px; }
+        
         .grupo-form { margin-bottom: 20px; }
         label.titulo-seccion { display: block; font-weight: bold; margin-bottom: 8px; color: var(--azul); font-size: 0.95rem; border-bottom: 2px solid #e9ecef; padding-bottom: 5px; }
-        select, input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
         
-        /* Cuadrícula de Botones */
+        select, input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; box-sizing: border-box; font-family: inherit; }
+        
         .grid-servicios { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
         .radio-card { position: relative; display: block; }
         .radio-card input { position: absolute; opacity: 0; width: 0; height: 0; }
@@ -25,12 +29,13 @@
         .botones-container { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
         .btn-guardar { background-color: var(--verde); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-dashboard { background-color: var(--azul); color: white; text-align: center; text-decoration: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; }
+        
         #mensaje-exito { display: none; background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="logo.png" alt="COOSAJO" class="logo">
+        <img src="LOGO COOSAJO SIN ESLOGAN.png" alt="COOSAJO" class="logo">
         <h1>Publicidad y Eventos</h1>
         <p>Control de logística y servicios para marcas</p>
     </div>
@@ -42,17 +47,23 @@
                 <div style="flex: 1;">
                     <label class="titulo-seccion">Mes:</label>
                     <select id="mes" required>
+                        <option value="" disabled selected>Mes...</option>
                         <option value="Enero">Enero</option><option value="Febrero">Febrero</option>
                         <option value="Marzo">Marzo</option><option value="Abril">Abril</option>
-                        <option value="Mayo">Mayo</option>
+                        <option value="Mayo">Mayo</option><option value="Junio">Junio</option>
+                        <option value="Julio">Julio</option><option value="Agosto">Agosto</option>
+                        <option value="Septiembre">Septiembre</option><option value="Octubre">Octubre</option>
+                        <option value="Noviembre">Noviembre</option><option value="Diciembre">Diciembre</option>
                     </select>
                 </div>
                 <div style="flex: 1;">
                     <label class="titulo-seccion">Marca / Proyecto:</label>
                     <select id="marca" required>
+                        <option value="" disabled selected>Marca...</option>
                         <option value="Coosajo">Coosajo</option>
                         <option value="Micoope">Micoope</option>
                         <option value="Génesis">Génesis</option>
+                        <option value="Parque Chatun">Parque Chatun</option>
                     </select>
                 </div>
             </div>
