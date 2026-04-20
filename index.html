@@ -30,7 +30,7 @@
         .btn-guardar { background-color: var(--verde); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-dashboard { background-color: var(--azul); color: white; text-align: center; text-decoration: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; }
         
-        #mensaje-exito { display: none; background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold; }
+        #mensaje-exito { display: none; background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: bold; border: 1px solid #c3e6cb; }
     </style>
 </head>
 <body>
@@ -60,9 +60,10 @@
                     <label class="titulo-seccion">Marca / Proyecto:</label>
                     <select id="marca" required>
                         <option value="" disabled selected>Marca...</option>
+                        <option value="Meta">Meta</option>
+                        <option value="Magicuenta">Magicuenta</option>
                         <option value="Coosajo">Coosajo</option>
-                        <option value="Micoope">Micoope</option>
-                        <option value="Génesis">Génesis</option>
+                        <option value="Municipalidad">Municipalidad</option>
                         <option value="Parque Chatun">Parque Chatun</option>
                     </select>
                 </div>
@@ -75,6 +76,7 @@
                     <label class="radio-card"><input type="radio" name="servicio" value="Sonido"><span>Sonido</span></label>
                     <label class="radio-card"><input type="radio" name="servicio" value="Carrileras"><span>Carrileras</span></label>
                     <label class="radio-card"><input type="radio" name="servicio" value="Toldos"><span>Toldos</span></label>
+                    <label class="radio-card"><input type="radio" name="servicio" value="Andamios"><span>Andamios</span></label>
                     <label class="radio-card"><input type="radio" name="servicio" value="Logística Carrera"><span>Logística Carrera</span></label>
                     <label class="radio-card"><input type="radio" name="servicio" value="Animación Promotores"><span>Animaciones</span></label>
                 </div>
