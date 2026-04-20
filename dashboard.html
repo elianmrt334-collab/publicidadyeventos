@@ -120,7 +120,7 @@
             if(cCat) cCat.destroy();
             cCat = new Chart(document.getElementById('chartCategorias'), {
                 type: 'doughnut',
-                data: { labels: Object.keys(porCat), datasets: [{ data: Object.values(porCat), backgroundColor: ['#172e59','#158e45','#f1c40f','#e67e22','#3498db'] }] },
+                data: { labels: Object.keys(porCat), datasets: [{ data: Object.values(porCat), backgroundColor: ['#172e59','#158e45','#f1c40f','#e67e22','#3498db', '#9b59b6'] }] },
                 options: { maintainAspectRatio: false }
             });
 
